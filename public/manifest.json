@@ -1,0 +1,19 @@
+{
+  "name": "TokoKu - Store Management",
+  "short_name": "TokoKu",
+  "description": "Aplikasi manajemen toko modern untuk kasir, stok barang, dan karyawan",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f1419",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://ui-avatars.com/api/?name=TK&background=10b981&color=fff&size=512",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"]
+}

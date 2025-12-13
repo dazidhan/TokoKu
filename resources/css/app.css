@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Font Plus Jakarta Sans */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@layer base {
+  :root {
+    /* Theme Light */
+    --background: 210 20% 98%;
+    --foreground: 220 25% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 10%;
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 160 84% 45%;
+    --secondary: 215 20% 95%;
+    --secondary-foreground: 220 25% 25%;
+    --muted: 215 20% 94%;
+    --muted-foreground: 220 10% 50%;
+    --accent: 160 70% 95%;
+    --accent-foreground: 160 84% 30%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 160 84% 39%;
+    --radius: 0.75rem;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(220 25% 10% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(220 25% 10% / 0.08), 0 2px 4px -2px hsl(220 25% 10% / 0.05);
+    --shadow-lg: 0 10px 15px -3px hsl(220 25% 10% / 0.08), 0 4px 6px -4px hsl(220 25% 10% / 0.05);
+    --shadow-glow: 0 0 20px hsl(160 84% 39% / 0.25);
+  }
+
+  /* Theme Dark (Ini yang dipakai karena default 'dark' di body) */
+  .dark {
+    --background: 224 30% 8%;
+    --foreground: 210 20% 98%;
+    --card: 224 25% 12%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 25% 12%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 160 70% 50%;
+    --primary-foreground: 224 30% 8%;
+    --primary-glow: 160 70% 55%;
+    --secondary: 224 20% 18%;
+    --secondary-foreground: 210 20% 90%;
+    --muted: 224 20% 16%;
+    --muted-foreground: 215 15% 55%;
+    --accent: 160 50% 15%;
+    --accent-foreground: 160 70% 60%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 70% 45%;
+    --warning: 38 92% 50%;
+    --border: 224 20% 20%;
+    --input: 224 20% 20%;
+    --ring: 160 70% 50%;
+
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.3);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.4), 0 2px 4px -2px hsl(0 0% 0% / 0.3);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.4), 0 4px 6px -4px hsl(0 0% 0% / 0.3);
+    --shadow-glow: 0 0 30px hsl(160 70% 50% / 0.3);
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+  body { @apply bg-background text-foreground antialiased; }
+}
+
+@layer utilities {
+  .shadow-card { box-shadow: var(--shadow-md); }
+  .shadow-card-hover { box-shadow: var(--shadow-lg); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
+  .safe-bottom { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+  .safe-top { padding-top: max(0.5rem, env(safe-area-inset-top)); }
+  
+  /* Animations */
+  .animate-slide-up { animation: slide-up 0.4s ease-out forwards; opacity: 0; }
+  .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+  .animate-slide-in-bottom { animation: slide-in-bottom 0.3s ease-out forwards; }
+  
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slide-in-bottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { @apply bg-muted-foreground/30 rounded-full; }
