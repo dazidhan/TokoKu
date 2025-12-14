@@ -1,109 +1,73 @@
+import defaultTheme from 'tailwindcss/defaultTheme';
+
 /** @type {import('tailwindcss').Config} */
 export default {
-    darkMode: ["class"],
+    darkMode: 'class', // Penting agar class="dark" bekerja
     content: [
-      "./resources/**/*.blade.php",
-      "./resources/**/*.js",
-      "./resources/**/*.vue",
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
+        './resources/js/**/*.js',
     ],
+
     theme: {
-      container: {
-        center: true,
-        padding: "1rem",
-        screens: {
-          "2xl": "1400px",
+        extend: {
+            fontFamily: {
+                sans: ['Plus Jakarta Sans', ...defaultTheme.fontFamily.sans],
+            },
+            // KITA DEFINISIKAN WARNA LANGSUNG DISINI (HARDCODED HEX)
+            colors: {
+                // Background Gelap Utama (Sesuai Gambar 1)
+                background: '#0f1419', 
+                foreground: '#ffffff',
+
+                // Warna Kartu/Card (Sedikit lebih terang dari background)
+                card: '#1a2332',
+                'card-foreground': '#ffffff',
+
+                // Warna Hijau Emerald (Primary)
+                primary: {
+                    DEFAULT: '#10b981',
+                    foreground: '#ffffff',
+                    glow: '#10b981', // Untuk efek shadow
+                },
+
+                // Warna Sekunder (Abu-abu gelap untuk tombol/border)
+                secondary: {
+                    DEFAULT: '#1f2937',
+                    foreground: '#e5e7eb',
+                },
+
+                // Warna Muted (Teks abu-abu)
+                muted: {
+                    DEFAULT: '#1f2937',
+                    foreground: '#9ca3af',
+                },
+
+                // Warna Aksen
+                accent: {
+                    DEFAULT: '#1f2937',
+                    foreground: '#ffffff',
+                },
+
+                // Warna Status
+                destructive: '#ef4444', // Merah
+                success: '#10b981',      // Hijau
+                warning: '#f59e0b',      // Kuning
+                info: '#3b82f6',         // Biru
+
+                // Border & Input
+                border: '#2d3748',
+                input: '#2d3748',
+                ring: '#10b981',
+            },
+            boxShadow: {
+                'card': '0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.3)', // Shadow lebih gelap
+                'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.3)',
+                'glow': '0 0 15px rgba(16, 185, 129, 0.4)', // Efek glow hijau
+            }
         },
-      },
-      extend: {
-        fontFamily: {
-          sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-        },
-        colors: {
-          border: "hsl(var(--border))",
-          input: "hsl(var(--input))",
-          ring: "hsl(var(--ring))",
-          background: "hsl(var(--background))",
-          foreground: "hsl(var(--foreground))",
-          primary: {
-            DEFAULT: "hsl(var(--primary))",
-            foreground: "hsl(var(--primary-foreground))",
-            glow: "hsl(var(--primary-glow))",
-          },
-          secondary: {
-            DEFAULT: "hsl(var(--secondary))",
-            foreground: "hsl(var(--secondary-foreground))",
-          },
-          destructive: {
-            DEFAULT: "hsl(var(--destructive))",
-            foreground: "hsl(var(--destructive-foreground))",
-          },
-          muted: {
-            DEFAULT: "hsl(var(--muted))",
-            foreground: "hsl(var(--muted-foreground))",
-          },
-          accent: {
-            DEFAULT: "hsl(var(--accent))",
-            foreground: "hsl(var(--accent-foreground))",
-          },
-          popover: {
-            DEFAULT: "hsl(var(--popover))",
-            foreground: "hsl(var(--popover-foreground))",
-          },
-          card: {
-            DEFAULT: "hsl(var(--card))",
-            foreground: "hsl(var(--card-foreground))",
-          },
-          // Custom Semantic Colors
-          success: {
-            DEFAULT: "hsl(var(--success))",
-            foreground: "hsl(0 0% 100%)",
-          },
-          warning: {
-            DEFAULT: "hsl(var(--warning))",
-            foreground: "hsl(0 0% 100%)",
-          },
-          info: {
-            DEFAULT: "hsl(var(--info))",
-            foreground: "hsl(0 0% 100%)",
-          },
-        },
-        borderRadius: {
-          lg: "var(--radius)",
-          md: "calc(var(--radius) - 2px)",
-          sm: "calc(var(--radius) - 4px)",
-          xl: "calc(var(--radius) + 4px)",
-          "2xl": "calc(var(--radius) + 8px)",
-        },
-        boxShadow: {
-            'card': 'var(--shadow-md)',
-            'card-hover': 'var(--shadow-lg)',
-            'glow': 'var(--shadow-glow)',
-        },
-        keyframes: {
-          "accordion-down": {
-            from: { height: "0" },
-            to: { height: "var(--radix-accordion-content-height)" },
-          },
-          "accordion-up": {
-            from: { height: "var(--radix-accordion-content-height)" },
-            to: { height: "0" },
-          },
-          "fade-in": {
-            from: { opacity: "0" },
-            to: { opacity: "1" },
-          },
-          "slide-up": {
-            from: { transform: "translateY(20px)", opacity: "0" },
-            to: { transform: "translateY(0)", opacity: "1" },
-          }
-        },
-        animation: {
-          "accordion-down": "accordion-down 0.2s ease-out",
-          "accordion-up": "accordion-up 0.2s ease-out",
-          "fade-in": "fade-in 0.3s ease-out forwards",
-          "slide-up": "slide-up 0.4s ease-out forwards",
-        },
-      },
     },
+
     plugins: [],
-  }
+};

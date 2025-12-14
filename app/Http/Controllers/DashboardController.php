@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Employee;
-use App\Models\Transaction; // Jangan lupa import ini
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -16,11 +16,20 @@ class DashboardController extends Controller
         $todayIncome = Transaction::whereDate('created_at', Carbon::today())->sum('total_price');
         $totalTransactions = Transaction::count();
         
+        // --- LOGIC PERBAIKAN FORMAT ANGKA ---
+        if ($todayIncome >= 1000000) {
+            // Jika jutaan, format jadi 1.5jt
+            $incomeDisplay = 'Rp ' . number_format($todayIncome / 1000000, 1) . 'jt';
+        } else {
+            // Jika ribuan/ratusan ribu, format biasa Rp 90.500
+            $incomeDisplay = 'Rp ' . number_format($todayIncome, 0, ',', '.');
+        }
+
         // 2. Data Statistik Cards
         $stats = [
             [
                 'title' => 'Penjualan Hari Ini',
-                'value' => 'Rp ' . number_format($todayIncome / 1000, 1) . 'jt', // Format Singkat (2.5jt)
+                'value' => $incomeDisplay, // <-- Pakai variabel yang sudah diformat benar
                 'change' => 'Realtime',
                 'type' => 'positive',
                 'icon' => 'wallet',

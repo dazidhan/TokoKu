@@ -24,5 +24,11 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Employee::create(['name' => 'Budi Santoso', 'role' => 'Kasir', 'phone' => '081234567890', 'status' => 'active', 'joined_at' => '2023-01-01']);
         \App\Models\Employee::create(['name' => 'Ahmad Fauzi', 'role' => 'Kasir', 'phone' => '081234567892', 'status' => 'cuti', 'joined_at' => '2023-03-01']);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Admin Toko',
+            'email' => 'admin@tokoku.com',
+            'password' => bcrypt('password'), // Passwordnya: password
+        ]);
     }
 }
