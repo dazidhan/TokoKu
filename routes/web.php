@@ -39,3 +39,5 @@ Route::middleware(['auth'])->group(function () {
 
 // Offline Page
 Route::get('/offline', [PosController::class, 'offline']);
+
+Route::view('/offline', 'offline')->name('offline');
