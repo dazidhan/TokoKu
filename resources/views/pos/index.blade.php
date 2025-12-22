@@ -350,17 +350,28 @@
         btn.innerHTML = 'Memproses...';
 
         try {
-            const response = await fetch("{{ route('kasir.store') }}", {
+            const response = await fetch("/kasir/checkout", { 
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}" // Pastikan token ini tetap ada
                 },
                 body: JSON.stringify({
                     customer_name: customerName,
                     cart: cart.map(item => ({ id: item.id, qty: item.qty }))
                 })
             });
+            // const response = await fetch("{{ route('kasir.store') }}", {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            //     },
+            //     body: JSON.stringify({
+            //         customer_name: customerName,
+            //         cart: cart.map(item => ({ id: item.id, qty: item.qty }))
+            //     })
+            // });
 
             const result = await response.json();
 
