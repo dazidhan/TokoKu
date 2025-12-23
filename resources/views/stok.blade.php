@@ -5,10 +5,12 @@
 <div class="px-5 mt-4 mb-4">
     <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-bold text-white">Stok Barang</h2>
-        <button onclick="document.getElementById('addModal').classList.remove('hidden')" class="bg-primary text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg hover:brightness-110">
-            + Tambah
+        <button onclick="document.getElementById('addModal').classList.remove('hidden')" class="bg-primary text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg hover:brightness-110 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            Tambah
         </button>
     </div>
+    
     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Cari nama atau SKU..." class="w-full bg-secondary border border-border text-white rounded-xl py-3 px-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
 </div>
 
@@ -53,6 +55,65 @@
         </div>
     </div>
     @endforeach
+</div>
+
+<div id="addModal" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="document.getElementById('addModal').classList.add('hidden')"></div>
+    
+    <div class="absolute bottom-0 left-0 right-0 bg-card rounded-t-3xl p-6 border-t border-border shadow-2xl animate-slide-in-bottom">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg font-bold text-white">Tambah Produk Baru</h2>
+            <button onclick="document.getElementById('addModal').classList.add('hidden')" class="p-2 bg-secondary rounded-full text-slate-400 hover:text-white">✕</button>
+        </div>
+
+        <form method="POST" action="{{ route('products.store') }}">
+            @csrf
+            <div class="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                <div>
+                    <label class="text-xs text-slate-400">Nama Produk</label>
+                    <input type="text" name="name" required placeholder="Contoh: Kopi Susu" class="w-full mt-1 bg-secondary border border-border text-white rounded-xl px-4 py-3 focus:outline-none focus:border-primary">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-xs text-slate-400">SKU (Kode Unik)</label>
+                        <input type="text" name="sku" required placeholder="BRG-001" class="w-full mt-1 bg-secondary border border-border text-white rounded-xl px-4 py-3 focus:outline-none focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-400">Kategori</label>
+                        <select name="category" required class="w-full mt-1 bg-secondary border border-border text-white rounded-xl px-4 py-3 focus:outline-none focus:border-primary">
+                            <option value="Makanan">Makanan</option>
+                            <option value="Minuman">Minuman</option>
+                            <option value="Kebersihan">Kebersihan</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-xs text-slate-400">Harga Jual (Rp)</label>
+                    <input type="number" name="price" required placeholder="15000" class="w-full mt-1 bg-secondary border border-border text-white rounded-xl px-4 py-3 focus:outline-none focus:border-primary">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-xs text-slate-400">Stok Awal</label>
+                        <input type="number" name="stock" required placeholder="10" class="w-full mt-1 bg-secondary border border-border text-white rounded-xl px-4 py-3 focus:outline-none focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-400">Min. Alert</label>
+                        <input type="number" name="min_stock" required placeholder="5" class="w-full mt-1 bg-secondary border border-border text-white rounded-xl px-4 py-3 focus:outline-none focus:border-primary">
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-primary hover:bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-900/20">
+                        + Simpan Produk
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div id="editModal" class="fixed inset-0 z-[60] hidden">
@@ -108,7 +169,7 @@
 
                 <div class="pt-4 flex gap-3">
                     <button type="submit" class="flex-1 bg-primary hover:bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-900/20">
-                        Simpan
+                        Simpan Perubahan
                     </button>
                 </div>
             </div>
@@ -118,7 +179,7 @@
             @csrf
             @method('DELETE')
             <button type="submit" onclick="return confirm('Hapus produk ini permanen?')" class="w-full py-3 text-red-500 font-medium hover:bg-red-500/10 rounded-xl transition-colors">
-                Hapus Produk
+                Hapus Produk Ini
             </button>
         </form>
     </div>
@@ -126,23 +187,17 @@
 
 <script>
     function openEditModal(product) {
-        // 1. Masukkan data ke form
         document.getElementById('edit_name').value = product.name;
-        document.getElementById('edit_sku').value = product.sku; // Pastikan kolom sku ada di database
+        document.getElementById('edit_sku').value = product.sku;
         document.getElementById('edit_category').value = product.category;
         document.getElementById('edit_price').value = product.price;
         document.getElementById('edit_stock').value = product.stock;
         document.getElementById('edit_min_stock').value = product.min_stock;
 
-        // 2. Set Action URL Form
-        // Pastikan route 'products.update' dan 'products.destroy' ada di web.php
-        // URL tujuan: /stok/{id}
         let url = "{{ url('/stok') }}/" + product.id; 
-        
         document.getElementById('editForm').action = url;
         document.getElementById('deleteForm').action = url;
 
-        // 3. Munculkan Modal
         document.getElementById('editModal').classList.remove('hidden');
     }
 
@@ -150,11 +205,10 @@
         document.getElementById('editModal').classList.add('hidden');
     }
 
-    // Fitur Search Sederhana (Client Side)
+    // Filter Search
     function filterTable() {
         let input = document.getElementById("searchInput").value.toLowerCase();
         let cards = document.querySelectorAll("#productList > div");
-
         cards.forEach(card => {
             let text = card.innerText.toLowerCase();
             card.style.display = text.includes(input) ? "flex" : "none";
