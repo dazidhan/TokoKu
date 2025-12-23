@@ -23,6 +23,10 @@ Route::middleware(['auth'])->group(function () {
     // Stok
     Route::get('/stok', [ProductController::class, 'index'])->name('stok');
     Route::post('/stok', [ProductController::class, 'store'])->name('products.store');
+    // Route::delete('/stok/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+    // Route::put('/stok/{id}', [ProductController::class, 'update'])->name('products.update');
+
+    Route::put('/stok/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/stok/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
 
     // Karyawan
